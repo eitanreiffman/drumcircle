@@ -4,12 +4,17 @@ require('dotenv').config();
 const express = require('express');
 // Import database connect function
 const connectDB = require('./database')
+// Enabling cross-origin requests
+const cors = require('cors')
 // Defining our Express App
 const app = express();
+// Enabling CORS
+app.use(cors());
+
 // Defining our Port
 const port = 3000;
 // Importing the routes
-const apiRoutes = require('./routes/apiRoutes');
+const routes = require('./routes/routes');
 
 
 // Connect to MongoDB
@@ -20,10 +25,6 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-app.get('/', (req, res) => {
-    res.send('This is Drumcircle');
-});
 
-
-// Using the API routes
-app.use('/api', apiRoutes)
+// Using the routes
+app.use('/', routes)
