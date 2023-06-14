@@ -3,7 +3,7 @@ const getSignUp = (req, res) => {
 }
 
 const createUser = (req, res) => {
-    // Logic to create a new user in the database and send the response    
+    // Logic to create a new user in the database and send the response
 }
 
 module.exports = {

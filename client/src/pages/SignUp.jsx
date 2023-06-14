@@ -13,15 +13,41 @@ export default function SignUp() {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
+
+        // Get user values
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        try {
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                // Sign-up successful
+                // You can redirect the user to a different page or show a success message
+                console.log('Sign up was successful')
+            } else {
+                // Sign-up failed
+                // You can display an error message to the user
+                console.log('Sign up was unsuccessful')
+            }
+        } catch (error) {
+            // Handle any errors that occur during the sign-up process
+        }
     }
 
   return (
     <div className="flex justify-center items-center h-screen">
         <div className="max-w-xs p-4">
             <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSignUp} >
                 <div className="mb-4">
                     <label htmlFor="email" className='block mb-2 text-sm font-medium'>
                         Email
