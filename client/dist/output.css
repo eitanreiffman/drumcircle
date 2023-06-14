@@ -1,6 +1,10 @@
-/*
+/* 
 ! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
 */
+
+
+
+  
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -59,8 +63,10 @@ html {
 body {
   margin: 0;
   /* 1 */
+  padding: 0;
   line-height: inherit;
   /* 2 */
+  height: 100%;
 }
 
 /*
