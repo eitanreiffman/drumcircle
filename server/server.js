@@ -1,5 +1,11 @@
 // Importing our environment variables
 require('dotenv').config();
+// Importing Body Parser
+const bodyParser = require('body-parser');
+// Importing the routes
+const routes = require('./routes/routes');
+// Importing Authenticate Token Module
+const authenticateToken = require('./auth')
 // Retrieving Express
 const express = require('express');
 // Import database connect function
@@ -10,11 +16,14 @@ const cors = require('cors')
 const app = express();
 // Enabling CORS
 app.use(cors());
+// Using Body Parser for app
+app.use(bodyParser.json());
+// Using Token Authentication
+app.use(authenticateToken)
+
 
 // Defining our Port
 const port = 3000;
-// Importing the routes
-const routes = require('./routes/routes');
 
 
 // Connect to MongoDB
