@@ -37,7 +37,7 @@ export default function SignUp() {
 
             if (response.ok) {
 
-                window.location.href = '/';
+                window.location.href = '/hub';
 
                 alert('Sign up was successful')
 
