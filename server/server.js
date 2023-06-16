@@ -18,8 +18,9 @@ const app = express();
 app.use(cors());
 // Using Body Parser for app
 app.use(bodyParser.json());
+
 // Using Token Authentication
-app.use(authenticateToken)
+// app.use(authenticateToken)
 
 
 // Defining our Port

@@ -2,8 +2,13 @@ import React, { useState } from 'react'
 
 export default function SignUp() {
 
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleUsernameChange = (e) => {
+        setUsername(e.target.value);
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -17,16 +22,17 @@ export default function SignUp() {
         e.preventDefault();
 
         // Get user values
+        const username = e.target.username.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
 
         try {
-            const response = await fetch('/signup', {
+            const response = await fetch('http://localhost:3000/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ username, email, password })
             });
 
             if (response.ok) {
@@ -48,6 +54,19 @@ export default function SignUp() {
         <div className="max-w-xs p-4">
             <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
             <form onSubmit={handleSignUp} >
+                <div className="mb-4">
+                    <label htmlFor="username" className='block mb-2 text-sm font-medium'>
+                        Username
+                    </label>
+                    <input 
+                        type="username" 
+                        id='username'
+                        value={username}
+                        onChange={handleUsernameChange}
+                        className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                        required
+                    />
+                </div>
                 <div className="mb-4">
                     <label htmlFor="email" className='block mb-2 text-sm font-medium'>
                         Email
