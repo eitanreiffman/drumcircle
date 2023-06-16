@@ -36,16 +36,21 @@ export default function SignUp() {
             });
 
             if (response.ok) {
-                // Sign-up successful
-                // You can redirect the user to a different page or show a success message
+
+                window.location.href = '/';
+
+                alert('Sign up was successful')
+
                 console.log('Sign up was successful')
             } else {
-                // Sign-up failed
-                // You can display an error message to the user
+
+                alert('Sign up was unsuccessful')
+
                 console.log('Sign up was unsuccessful')
             }
         } catch (error) {
-            // Handle any errors that occur during the sign-up process
+            console.log(error)
+            alert('An error has occurred during the sign up')
         }
     }
 
