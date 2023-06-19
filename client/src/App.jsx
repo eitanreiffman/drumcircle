@@ -11,7 +11,7 @@ import './index.css';
 function App() {
     
   return (
-    <div className="min-h-screen bg-slate-300">
+    <div className="min-h-screen">
         <Router>
             <Routes>
                 <Route path="/" Component={WelcomePage} />
