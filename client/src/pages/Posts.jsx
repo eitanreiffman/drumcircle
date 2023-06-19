@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from './Navbar';
 
 export default function Posts() {
 
@@ -18,6 +19,9 @@ useEffect(() => {
 
 
 return (
-    <h1 className='text-blue-500 text-3xl font-bold'>{variableString}</h1>
+    <>
+        <Navbar />
+        <h1 className='text-blue-500 text-3xl font-bold'>{variableString}</h1>
+    </>
   )
 }
