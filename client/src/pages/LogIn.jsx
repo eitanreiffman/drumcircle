@@ -15,8 +15,32 @@ export default function LogIn() {
 
     const handleLogIn = async (e) => {
         e.preventDefault();
-        console.log('placeholder submit for now')
-    }
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                // Login successful
+                const data = await response.json();
+                const token = data.token;
+                // Store token in localStorage or secure storage mechanism
+                localStorage.setItem('token', token);
+                // Redirect logged in user to Artist Hub
+                window.location.href = '/hub';
+            } else {
+                // Login failed
+                console.log('Login failed')
+            }
+        } catch (error) {
+            console.error('Failed to log in:', error)
+        }
+    };
 
   return (
     <>
