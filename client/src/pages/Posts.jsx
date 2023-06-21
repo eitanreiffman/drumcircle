@@ -22,7 +22,7 @@ return (
     <>
         <Navbar />
         <div className='flex justify-center items-center h-screen'>
-            <h1 className='text-blue-500 text-3xl font-bold'>{variableString}</h1>
+            <h1 className='text-3xl font-bold'>{variableString}</h1>
         </div>
     </>
   )

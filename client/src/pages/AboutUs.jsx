@@ -6,7 +6,7 @@ export default function AboutUs() {
     <>
         <Navbar />
         <div className="flex justify-center items-center h-screen">
-            <h1 className='text-blue-500 text-3xl font-bold'>About Us</h1>
+            <h1 className='text-5xl font-bold'>About Us</h1>
         </div>
     </>
   )
