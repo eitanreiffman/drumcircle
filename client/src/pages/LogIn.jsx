@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from './Navbar';
 
 export default function LogIn() {
     const [username, setUsername] = useState('');
@@ -44,7 +43,6 @@ export default function LogIn() {
 
   return (
     <>
-        <Navbar />
         <div className="flex justify-center items-center h-screen">
             <div className="max-w-xs p-4">
                 <h2 className="text-2xl font-bold mb-4 text-center">Log In</h2>
