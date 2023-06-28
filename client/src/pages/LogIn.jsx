@@ -27,11 +27,16 @@ export default function LogIn() {
             if (response.ok) {
                 // Login successful
                 const data = await response.json();
+                // Check if response contains a redirect URL for Artist Setup
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                } else {
                 const token = data.token;
                 // Store token in localStorage or secure storage mechanism
                 localStorage.setItem('token', token);
                 // Redirect logged in user to Artist Hub
                 window.location.href = '/hub';
+            }
             } else {
                 // Login failed
                 console.log('Login failed')

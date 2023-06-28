@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AboutUs from "./pages/AboutUs";
+import ArtistSetup from './pages/ArtistSetup';
 import Hub from "./pages/Hub";
 import LogIn from "./pages/LogIn";
 import Navbar from "./pages/Navbar";
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/signup" Component={SignUp} />
                 <Route path="/login" Component={LogIn} />
                 <Route path="/hub" Component={Hub} />
+                <Route path="/artist_setup" Component={ArtistSetup} />
             </Routes>
         </Router>
     </div>
