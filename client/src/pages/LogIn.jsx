@@ -28,7 +28,9 @@ export default function LogIn() {
                 // Login successful
                 const data = await response.json();
                 // Check if response contains a redirect URL for Artist Setup
+                // This would only be true if the user hasn't set up an Artist Profile
                 if (data.redirectUrl) {
+                    // Redirects to Artist Setup
                     window.location.href = data.redirectUrl;
                 } else {
                 const token = data.token;
