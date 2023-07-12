@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import WelcomePage from "./pages/WelcomePage";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
+import './styles.css';
 
 
 function App() {
