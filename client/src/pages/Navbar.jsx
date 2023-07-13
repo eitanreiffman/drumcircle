@@ -11,7 +11,7 @@ export default function Navbar({isAuthenticated}) {
     }
 
   return (
-        <div className="w-full z-10 py-4 text-center text-xl font-bold">
+        <div className="w-full z-10 py-4 text-center text-xl text-white font-bold">
             <ul className='flex justify-start'>
                 <li className='mx-4'><a href='/'>Drumcircle</a></li>
                 {isAuthenticated && <li className='mr-4'><a href='/hub'>Hub</a></li>}

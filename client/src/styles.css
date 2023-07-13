@@ -3,5 +3,6 @@ body {
     padding: 0;
     line-height: inherit;
     height: 100%;
-    font-family: 'Pathway Gothic One', sans-serif;
+    font-family: 'Libre Franklin', sans-serif;
+    background: linear-gradient(177deg, #637bff, #ffffff);
 }
