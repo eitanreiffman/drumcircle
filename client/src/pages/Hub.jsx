@@ -20,7 +20,7 @@ export default function Hub() {
   return (
     <>
         <div className='flex justify-center items-center h-screen'>
-            <h1 className='text-3xl font-medium text-center'>
+            <h1 className='text-3xl font-medium text-center text-gray-700'>
                 Welcome to the Artist Hub
                 <br />
                 {variableString}

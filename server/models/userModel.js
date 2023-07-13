@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     hasCompletedArtistProfile: {
         type: Boolean,
+        required: false,
         default: false
     }
 });

@@ -29,7 +29,10 @@ export default function LogIn() {
                 const data = await response.json();
                 // Check if response contains a redirect URL for Artist Setup
                 // This would only be true if the user hasn't set up an Artist Profile
-                if (data.redirectUrl) {
+                if (data.redirectUrl === '/artist_setup') {
+                    const token = data.token;
+                    // Store token in localStorage or secure storage mechanism
+                    localStorage.setItem('token', token);
                     // Redirects to Artist Setup
                     window.location.href = data.redirectUrl;
                 } else {
@@ -37,7 +40,7 @@ export default function LogIn() {
                 // Store token in localStorage or secure storage mechanism
                 localStorage.setItem('token', token);
                 // Redirect logged in user to Artist Hub
-                window.location.href = '/hub';
+                window.location.href = data.redirectUrl;
             }
             } else {
                 // Login failed
@@ -52,7 +55,7 @@ export default function LogIn() {
     <>
         <div className="flex justify-center items-center h-screen">
             <div className="max-w-xs p-4">
-                <h2 className="text-2xl font-bold mb-4 text-center">Log In</h2>
+                <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">Log In</h2>
                 <form onSubmit={handleLogIn} >
                     <div className="mb-4">
                         <label htmlFor="username" className='block mb-2 text-sm font-medium'>

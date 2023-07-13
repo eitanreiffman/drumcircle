@@ -58,7 +58,7 @@ export default function SignUp() {
     <>
         <div className="flex justify-center items-center h-screen">
             <div className="max-w-xs p-4">
-                <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+                <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">Sign Up</h2>
                 <form onSubmit={handleSignUp} >
                     <div className="mb-4">
                         <label htmlFor="username" className='block mb-2 text-sm font-medium'>

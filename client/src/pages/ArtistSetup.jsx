@@ -28,6 +28,36 @@ export default function ArtistSetup() {
         'flute': false
     });
 
+    const artistTypes = [
+        'musician',
+        'composer',
+        'producer',
+        'audio engineer',
+        'lyricist',
+    ]
+
+    const genres = [
+        'rock',
+        'folk',
+        'jazz',
+        'metal',
+        'pop',
+        'rap',
+        'hip hop',
+        'funk'
+    ]
+
+    const instruments = [
+        'vocals',
+        'guitar',
+        'bass',
+        'piano',
+        'drums',
+        'violin',
+        'cello',
+        'flute'
+    ]
+
     const handleOptionClick = (option) => {
         setOptions((prevOptions) => {
             const updatedOptions = { ...prevOptions };
@@ -66,7 +96,7 @@ export default function ArtistSetup() {
         setBio(event.target.value);
     }
 
-    const [socialMedia, setSocialMedia] = useState({
+    const [portfolioLinks, setPortfolioLinks] = useState({
         spotify: '',
         soundcloud: '',
         instagram: '',
@@ -74,23 +104,54 @@ export default function ArtistSetup() {
         youtube: ''
     })
 
-    const handleSocialMediaChange = (event) => {
+    const handlePortfolioLinkChange = (event) => {
         const { name, value } = event.target;
-        setSocialMedia((prevSocialMedia) => ({
-            ...prevSocialMedia,
+        setPortfolioLinks((prevPortfolioLinks) => ({
+            ...prevPortfolioLinks,
             [name]: value
         }));
     };
+
+    const handleFinish = async () => {
+        
+        // Collect data from artist setup form
+        
+        const selectedArtistTypes = [];
+        const selectedGenres = [];
+        const selectedInstruments = [];
+
+        for (const [option, isSelected] of Object.entries(options)) {
+            if (isSelected) {
+                if (artistTypes.includes(option)) {
+                    selectedArtistTypes.push(option)
+                } else if (genres.includes(option)) {
+                    selectedGenres.push(option)
+                } else if (instruments.includes(option)) {
+                    selectedInstruments.push(option)
+                }
+            }
+        }
+
+        const providedPortfolioLinks = portfolioLinks.filter(([key, value]) => value !== null)
+
+        const artistData = {
+            artistTypes: selectedArtistTypes,
+            preferredGenres: selectedGenres,
+            instruments: selectedInstruments,
+            bio: bio,
+            portfolioLinks: providedPortfolioLinks
+        }
+    }
 
     return (
         <>
             <div className="flex justify-center items-center h-screen w-screen">
                 <div className='w-2/3'>
-                    <h1 className='text-5xl text-center py-4 font-bold'>{prompts[currentPromptIndex]}</h1>
+                    <h1 className='text-5xl text-center text-gray-700 py-4 font-bold'>{prompts[currentPromptIndex]}</h1>
                     {currentPromptIndex === 0 ? (
                     <div className='flex justify-around my-5 text-2xl'>
-                        <button className='hover:text-gray-400' onClick={handleNextPrompt}>Yes, create artist profile</button>
-                        <button className='hover:text-gray-400' onClick={() => navigate('/hub')}>No, skip</button>
+                        <button className='text-gray-700 hover:font-medium' onClick={handleNextPrompt}>Yes, create artist profile</button>
+                        <button className='text-gray-700 hover:font-medium' onClick={() => navigate('/hub')}>No, skip</button>
                     </div>
                     ) : currentPromptIndex === 1 ? (
                         <>
@@ -103,7 +164,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('musician')}
                                 >
-                                    <span className={`${ options['musician'] === false ? 'hover:text-gray-400' : '' }`}>Musician</span>
+                                    <span className={`${ options['musician'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Musician</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -113,7 +174,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('composer')}
                                 >
-                                    <span className={`${ options['composer'] === false ? 'hover:text-gray-400' : '' }`}>Composer</span>
+                                    <span className={`${ options['composer'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Composer</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -123,7 +184,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('producer')}
                                 >
-                                    <span className={`${ options['producer'] === false ? 'hover:text-gray-400' : '' }`}>Producer</span>
+                                    <span className={`${ options['producer'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Producer</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -133,7 +194,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('audio engineer')}
                                 >
-                                    <span className={`${ options['audio engineer'] === false ? 'hover:text-gray-400' : '' }`}>Audio Engineer</span>
+                                    <span className={`${ options['audio engineer'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Audio Engineer</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -143,12 +204,12 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('lyricist')}
                                 >
-                                    <span className={`${ options['lyricist'] === false ? 'hover:text-gray-400' : '' }`}>Lyricist</span>
+                                    <span className={`${ options['lyricist'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Lyricist</span>
                                 </div>
                             </div>
                             <div className='flex justify-between'>
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl hover:text-gray-400'>Back</button>
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl hover:text-gray-400'>Next</button>
+                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
+                                <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>
                             </div>
                         </>
                         ) : currentPromptIndex === 2 ? (
@@ -162,7 +223,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('rock')}
                                 >
-                                    <span className={`${ options['rock'] === false ? 'hover:text-gray-400' : '' }`}>Rock</span>
+                                    <span className={`${ options['rock'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Rock</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -172,7 +233,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('folk')}
                                 >
-                                    <span className={`${ options['folk'] === false ? 'hover:text-gray-400' : '' }`}>Folk</span>
+                                    <span className={`${ options['folk'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Folk</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -182,7 +243,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('jazz')}
                                 >
-                                    <span className={`${ options['jazz'] === false ? 'hover:text-gray-400' : '' }`}>Jazz</span>
+                                    <span className={`${ options['jazz'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Jazz</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -192,7 +253,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('metal')}
                                 >
-                                    <span className={`${ options['metal'] === false ? 'hover:text-gray-400' : '' }`}>Metal</span>
+                                    <span className={`${ options['metal'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Metal</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -202,7 +263,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('pop')}
                                 >
-                                    <span className={`${ options['pop'] === false ? 'hover:text-gray-400' : '' }`}>Pop</span>
+                                    <span className={`${ options['pop'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Pop</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -212,7 +273,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('rap')}
                                 >
-                                    <span className={`${ options['rap'] === false ? 'hover:text-gray-400' : '' }`}>Rap</span>
+                                    <span className={`${ options['rap'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Rap</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -222,7 +283,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('hip hop')}
                                 >
-                                    <span className={`${ options['hip hop'] === false ? 'hover:text-gray-400' : '' }`}>Hip Hop</span>
+                                    <span className={`${ options['hip hop'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Hip Hop</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -232,12 +293,12 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('funk')}
                                 >
-                                    <span className={`${ options['funk'] === false ? 'hover:text-gray-400' : '' }`}>Funk</span>
+                                    <span className={`${ options['funk'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Funk</span>
                                 </div>
                             </div>
                             <div className='flex justify-between'>
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl hover:text-gray-400'>Back</button>
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl hover:text-gray-400'>Next</button>
+                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
+                                <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>
                             </div>                        </>
                     ) : currentPromptIndex === 3 ? (
                         <>
@@ -250,7 +311,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('vocals')}
                                 >
-                                    <span className={`${ options['vocals'] === false ? 'hover:text-gray-400' : '' }`}>Vocals</span>
+                                    <span className={`${ options['vocals'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Vocals</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -260,7 +321,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('guitar')}
                                 >
-                                    <span className={`${ options['guitar'] === false ? 'hover:text-gray-400' : '' }`}>Guitar</span>
+                                    <span className={`${ options['guitar'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Guitar</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -270,7 +331,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('bass')}
                                 >
-                                    <span className={`${ options['bass'] === false ? 'hover:text-gray-400' : '' }`}>Bass</span>
+                                    <span className={`${ options['bass'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Bass</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -280,7 +341,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('piano')}
                                 >
-                                    <span className={`${ options['piano'] === false ? 'hover:text-gray-400' : '' }`}>Piano</span>
+                                    <span className={`${ options['piano'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Piano</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -290,7 +351,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('drums')}
                                 >
-                                    <span className={`${ options['drums'] === false ? 'hover:text-gray-400' : '' }`}>Drums</span>
+                                    <span className={`${ options['drums'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Drums</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -300,7 +361,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('violin')}
                                 >
-                                    <span className={`${ options['violin'] === false ? 'hover:text-gray-400' : '' }`}>Violin</span>
+                                    <span className={`${ options['violin'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Violin</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -310,7 +371,7 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('cello')}
                                 >
-                                    <span className={`${ options['cello'] === false ? 'hover:text-gray-400' : '' }`}>Cello</span>
+                                    <span className={`${ options['cello'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Cello</span>
                                 </div>
                                 <div
                                     className={`p-2 rounded-2xl cursor-pointer ${
@@ -320,12 +381,12 @@ export default function ArtistSetup() {
                                     }`}
                                     onClick={() => handleOptionClick('flute')}
                                 >
-                                    <span className={`${ options['flute'] === false ? 'hover:text-gray-400' : '' }`}>Flute</span>
+                                    <span className={`${ options['flute'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Flute</span>
                                 </div>
                             </div>
                             <div className='flex justify-between'>
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl hover:text-gray-400'>Back</button>
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl hover:text-gray-400'>Next</button>
+                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
+                                <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>
                             </div>
                         </>
                     ) : currentPromptIndex === 4 ? (
@@ -340,8 +401,8 @@ export default function ArtistSetup() {
                                 />
                             </div>
                             <div className="flex justify-between">
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl hover:text-gray-400'>Back</button>
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl hover:text-gray-400'>Next</button>                            
+                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
+                                <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>                            
                             </div>
                         </>
                     ) : currentPromptIndex === 5 ? (
@@ -353,8 +414,8 @@ export default function ArtistSetup() {
                                     type="text" 
                                     name='spotify'
                                     placeholder='Spotify'
-                                    value={socialMedia.spotify}
-                                    onChange={handleSocialMediaChange}
+                                    value={portfolioLinks.spotify}
+                                    onChange={handlePortfolioLinkChange}
                                     />
                                 </div>
                                 <div className='flex justify-center py-2'>
@@ -363,8 +424,8 @@ export default function ArtistSetup() {
                                     type="text"
                                     name='soundcloud' 
                                     placeholder='Soundcloud'
-                                    value={socialMedia.soundcloud}
-                                    onChange={handleSocialMediaChange}
+                                    value={portfolioLinks.soundcloud}
+                                    onChange={handlePortfolioLinkChange}
                                     />
                                 </div>
                                 <div className='flex justify-center py-2'>
@@ -373,8 +434,8 @@ export default function ArtistSetup() {
                                     type="text" 
                                     name='instagram'
                                     placeholder='Instagram'
-                                    value={socialMedia.instagram}
-                                    onChange={handleSocialMediaChange}
+                                    value={portfolioLinks.instagram}
+                                    onChange={handlePortfolioLinkChange}
                                     />
                                 </div>
                                 <div className='flex justify-center py-2'>
@@ -383,8 +444,8 @@ export default function ArtistSetup() {
                                     type="text" 
                                     name='tiktok'
                                     placeholder='Tiktok'
-                                    value={socialMedia.tiktok}
-                                    onChange={handleSocialMediaChange}
+                                    value={portfolioLinks.tiktok}
+                                    onChange={handlePortfolioLinkChange}
                                     />
                                 </div>
                                 <div className='flex justify-center py-2'>
@@ -393,14 +454,14 @@ export default function ArtistSetup() {
                                     type="text" 
                                     name='youtube'
                                     placeholder='Youtube'
-                                    value={socialMedia.youtube}
-                                    onChange={handleSocialMediaChange}
+                                    value={portfolioLinks.youtube}
+                                    onChange={handlePortfolioLinkChange}
                                     />
                                 </div>
                             </div>
                             <div className="flex justify-between">
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl hover:text-gray-400'>Back</button>                
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl hover:text-gray-400'>Finish</button>
+                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>                
+                                <button onClick={handleFinish} className='my-6 text-2xl text-gray-700 hover:font-medium'>Finish</button>
                             </div>
                         </>
                     ) : null

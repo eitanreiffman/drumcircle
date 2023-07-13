@@ -7,7 +7,7 @@ const artistSchema = new mongoose.Schema({
         required: true
     },
     artistType: {
-        type: String,
+        type: [String],
         required: true
     },
     preferredGenres: {
@@ -23,7 +23,10 @@ const artistSchema = new mongoose.Schema({
         required: false
     },
     portfolioLinks: {
-        type: [String],
+        type: [{
+            link: String,
+            website: String
+        }],
         required: false
     }
 });

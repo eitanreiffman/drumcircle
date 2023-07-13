@@ -49,25 +49,24 @@ const logInUser = async (req, res) => {
         }
 
         // If the username and password are valid
+        // Create JWT
+        const token = jwt.sign({ 
+            userId: user._id, 
+            username: user.username 
+        }, 
+        process.env.JWT_SECRET, 
+        { expiresIn: '1h' }
+    );
+
         // Check if user has completed artist profile setup
         if (user.hasCompletedArtistProfile) {
-            // Create JWT
-            const token = jwt.sign({ 
-                userId: user._id, 
-                username: user.username 
-            }, 
-            process.env.JWT_SECRET, 
-            { expiresIn: '1h' }
-        )
         // Return token as a response
-        res.json({ token });
-        
-        // If they haven't completed their artist profile setup
+        res.json({ token, redirectUrl: '/hub' });
         } else {
-        console.log('need to set up artist')
         // Redirect to artist setup page
-        res.status(200).json({ redirectUrl: 'http://localhost:3001/artist_setup' });
-        }
+        res.json({ token, redirectUrl: '/artist_setup' });
+    }
+
     } catch (error) {
         console.error('Failed to log in:', error);
         res.status(500).json({ message: 'Failed to log in' });
