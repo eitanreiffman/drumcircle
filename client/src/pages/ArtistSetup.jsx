@@ -57,14 +57,6 @@ export default function ArtistSetup() {
         'cello',
         'flute'
     ]
-
-    const handleOptionClick = (option) => {
-        setOptions((prevOptions) => {
-            const updatedOptions = { ...prevOptions };
-            updatedOptions[option] = !updatedOptions[option];
-            return updatedOptions;
-        });
-    }
     
     const prompts = [
         "Would you like to create an artist profile?",
@@ -88,6 +80,34 @@ export default function ArtistSetup() {
 
     const handleBackPrompt = () => {
         setCurrentPromptIndex(currentPromptIndex - 1);
+    }
+
+    const handleOptionClick = (option) => {
+            setOptions((prevOptions) => {
+            const updatedOptions = { ...prevOptions };
+            updatedOptions[option] = !updatedOptions[option];
+            return updatedOptions;
+        });
+    }
+
+    const getOptionsArray = () => {
+        switch (currentPromptIndex) {
+            case 1:
+                return artistTypes;
+            case 2:
+                return genres;
+            case 3:
+                return instruments;
+            default:
+                return [];
+        }
+    };
+
+    const getOptionLabel = (option) => {
+        return option
+            .split(' ')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
     }
 
     const [bio, setBio] = useState('');
@@ -153,243 +173,29 @@ export default function ArtistSetup() {
                         <button className='text-gray-700 hover:font-medium' onClick={handleNextPrompt}>Yes, create artist profile</button>
                         <button className='text-gray-700 hover:font-medium' onClick={() => navigate('/hub')}>No, skip</button>
                     </div>
-                    ) : currentPromptIndex === 1 ? (
+                    ) : currentPromptIndex === 1 || currentPromptIndex === 2 || currentPromptIndex === 3 ? (
                         <>
                             <div className='flex flex-wrap justify-around my-5 text-2xl'>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['musician'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('musician')}
-                                >
-                                    <span className={`${ options['musician'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Musician</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['composer'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('composer')}
-                                >
-                                    <span className={`${ options['composer'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Composer</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['producer'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('producer')}
-                                >
-                                    <span className={`${ options['producer'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Producer</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['audio engineer'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('audio engineer')}
-                                >
-                                    <span className={`${ options['audio engineer'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Audio Engineer</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['lyricist'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('lyricist')}
-                                >
-                                    <span className={`${ options['lyricist'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Lyricist</span>
-                                </div>
+                                {getOptionsArray(currentPromptIndex).map((option) => (
+                                    <div
+                                        key={option}
+                                        className={`p-2 rounded-2xl cursor-pointer ${
+                                            options[option] ?
+                                            'border border-blue-500 bg-blue-200'
+                                            : ''                                         
+                                        }`}
+                                        onClick={() => handleOptionClick(option)}
+                                        >
+                                        <span className={`${ !options[option] ? 'text-gray-700 hover:font-medium' : '' }`}>{getOptionLabel(option)}</span>
+                                    </div>
+                                ))}
                             </div>
                             <div className='flex justify-between'>
                                 <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
                                 <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>
                             </div>
                         </>
-                        ) : currentPromptIndex === 2 ? (
-                        <>
-                            <div className='flex flex-wrap justify-around my-5 text-2xl'>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['rock'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('rock')}
-                                >
-                                    <span className={`${ options['rock'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Rock</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['folk'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('folk')}
-                                >
-                                    <span className={`${ options['folk'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Folk</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['jazz'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('jazz')}
-                                >
-                                    <span className={`${ options['jazz'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Jazz</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['metal'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('metal')}
-                                >
-                                    <span className={`${ options['metal'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Metal</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['pop'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('pop')}
-                                >
-                                    <span className={`${ options['pop'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Pop</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['rap'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('rap')}
-                                >
-                                    <span className={`${ options['rap'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Rap</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['hip hop'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('hip hop')}
-                                >
-                                    <span className={`${ options['hip hop'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Hip Hop</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['funk'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('funk')}
-                                >
-                                    <span className={`${ options['funk'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Funk</span>
-                                </div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>
-                            </div>                        </>
-                    ) : currentPromptIndex === 3 ? (
-                        <>
-                            <div className='flex flex-wrap justify-around my-5 text-2xl'>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['vocals'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('vocals')}
-                                >
-                                    <span className={`${ options['vocals'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Vocals</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['guitar'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('guitar')}
-                                >
-                                    <span className={`${ options['guitar'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Guitar</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['bass'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('bass')}
-                                >
-                                    <span className={`${ options['bass'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Bass</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['piano'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('piano')}
-                                >
-                                    <span className={`${ options['piano'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Piano</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['drums'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('drums')}
-                                >
-                                    <span className={`${ options['drums'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Drums</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['violin'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('violin')}
-                                >
-                                    <span className={`${ options['violin'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Violin</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['cello'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('cello')}
-                                >
-                                    <span className={`${ options['cello'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Cello</span>
-                                </div>
-                                <div
-                                    className={`p-2 rounded-2xl cursor-pointer ${
-                                        options['flute'] === true ?
-                                        'border border-blue-500 bg-blue-200'
-                                        : ''                                         
-                                    }`}
-                                    onClick={() => handleOptionClick('flute')}
-                                >
-                                    <span className={`${ options['flute'] === false ? 'text-gray-700 hover:font-medium' : '' }`}>Flute</span>
-                                </div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <button onClick={handleBackPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Back</button>
-                                <button onClick={handleNextPrompt} className='my-6 text-2xl text-gray-700 hover:font-medium'>Next</button>
-                            </div>
-                        </>
-                    ) : currentPromptIndex === 4 ? (
+                        ) : currentPromptIndex === 4 ? (
                         <>
                             <div className='pt-4'>
                                 <textarea 
