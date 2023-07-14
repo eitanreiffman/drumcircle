@@ -8,11 +8,11 @@ const artistSchema = new mongoose.Schema({
     },
     artistType: {
         type: [String],
-        required: true
+        required: false
     },
     preferredGenres: {
         type: [String],
-        required: true
+        required: false
     },
     instruments: {
         type: [String],

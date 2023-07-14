@@ -27,18 +27,15 @@ export default function LogIn() {
             if (response.ok) {
                 // Login successful
                 const data = await response.json();
+                const token = data.token;
+                localStorage.setItem('token', token);
+
                 // Check if response contains a redirect URL for Artist Setup
                 // This would only be true if the user hasn't set up an Artist Profile
                 if (data.redirectUrl === '/artist_setup') {
-                    const token = data.token;
-                    // Store token in localStorage or secure storage mechanism
-                    localStorage.setItem('token', token);
                     // Redirects to Artist Setup
                     window.location.href = data.redirectUrl;
                 } else {
-                const token = data.token;
-                // Store token in localStorage or secure storage mechanism
-                localStorage.setItem('token', token);
                 // Redirect logged in user to Artist Hub
                 window.location.href = data.redirectUrl;
             }

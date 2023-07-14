@@ -152,7 +152,12 @@ export default function ArtistSetup() {
             }
         }
 
-        const providedPortfolioLinks = portfolioLinks.filter(([key, value]) => value !== null)
+        const providedPortfolioLinks = Object.entries(portfolioLinks)
+            .filter(([key, value]) => value !== '')
+            .reduce((obj, [key, value]) => {
+                obj[key] = value;
+                return obj
+            }, {});
 
         const artistData = {
             artistTypes: selectedArtistTypes,
@@ -160,6 +165,29 @@ export default function ArtistSetup() {
             instruments: selectedInstruments,
             bio: bio,
             portfolioLinks: providedPortfolioLinks
+        }
+
+        const token = localStorage.getItem('token')
+
+        const headers = {
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/artists', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(artistData)
+            });
+
+            if (response.ok) {
+                console.log('Artist profile created successfully')
+            } else {
+                console.error('Error creating artist profile:', response.status)
+            }
+        } catch (error) {
+            console.error('Error creating artist profile', error);
         }
     }
 

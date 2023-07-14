@@ -4,7 +4,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 // Importing the routes
 const routes = require('./routes/routes');
-// Importing Authenticate Token Module
+// Importing Authenticate Token Modules
 const authenticateToken = require('./auth')
 // Retrieving Express
 const express = require('express');
@@ -19,22 +19,21 @@ app.use(cors());
 // Using Body Parser for app
 app.use(bodyParser.json());
 
-// Using Token Authentication
-// app.use(authenticateToken)
+// Connect to MongoDB
+connectDB();
+
+app.use(authenticateToken)
+
+// Using the routes
+app.use('/', routes)
+
 
 
 // Defining our Port
 const port = 3000;
-
-
-// Connect to MongoDB
-connectDB();
 
 // Telling our app which port to listen to
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-
-// Using the routes
-app.use('/', routes)
